@@ -1,8 +1,13 @@
 import '../css/style.css'
 import { Actor, Engine, Vector, DisplayMode } from "excalibur"
 import { Resources, ResourceLoader } from './resources.js'
+import {Dobber} from './dobber.js'
+import { Fish } from './fish.js'
+import { Rod } from './rod.js'
 
 export class Game extends Engine {
+    dobber
+    fish
 
     constructor() {
         super({ 
@@ -11,21 +16,16 @@ export class Game extends Engine {
             maxFps: 60,
             displayMode: DisplayMode.FitScreen
          })
+        this.showDebug(true)
         this.start(ResourceLoader).then(() => this.startGame())
     }
 
     startGame() {
-        console.log("start de game!")
-        const fish = new Actor()
-        fish.graphics.use(Resources.Fish.toSprite())
-        fish.pos = new Vector(500, 300)
-        fish.vel = new Vector(-10,0)
-        fish.events.on("exitviewport", (e) => this.fishLeft(e))
-        this.add(fish)
-    }
-
-    fishLeft(e) {
-        e.target.pos = new Vector(1350, 300)
+        console.log("start de game eens joh!")
+       this.rod= new Rod('red')
+       this.add(this.rod)
+       this.fish = new Fish()
+       this.add(this.fish)
     }
 }
 
