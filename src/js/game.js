@@ -4,6 +4,12 @@ import { Resources, ResourceLoader } from './resources.js'
 import {Dobber} from './dobber.js'
 import { Fish } from './fish.js'
 import { Rod } from './rod.js'
+import { UI } from './ui.js'
+
+//setting the localstorage if not yet added for the UI.highscore
+if (!localStorage.getItem('highscore')){
+        localStorage.setItem('highscore',0)
+    }
 
 export class Game extends Engine {
     dobber
@@ -21,11 +27,12 @@ export class Game extends Engine {
     }
 
     startGame() {
-        console.log("start de game eens joh!")
-       this.rod= new Rod('red')
-       this.add(this.rod)
-       this.fish = new Fish()
-       this.add(this.fish)
+        this.ui= new UI()
+        this.add(this.ui)  
+        this.rod= new Rod('red')
+        this.add(this.rod)
+        this.fish = new Fish()
+        this.add(this.fish)
     }
 }
 

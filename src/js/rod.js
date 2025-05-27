@@ -13,9 +13,9 @@ export class Rod extends Actor{
         this.pos = new Vector(100, 100)
         this.casted= false
     }
-onInitialize(engine){
-    engine.input.keyboard.on("release", (e)=> this.goBobber(e))
-}
+    onInitialize(engine){
+        engine.input.keyboard.on("release", (e)=> this.goBobber(e))
+    }
 
     onPreUpdate(engine){
         let kb = engine.input.keyboard
@@ -32,36 +32,30 @@ onInitialize(engine){
     goBobber(e){
         if(e.key=== Keys.Space){                        //releasing the space button
             if(!this.casted){                           // casting the dobber out
-                this.casted= true
-                this.graphics.use(Resources.RodOut.toSprite())
+                this.castedState(true)
                 this.dobber = new Dobber(this.power)    // the dobberpos from the power
-                console.log(this.power)
                 this.addChild(this.dobber)
                 this.power =0
             }
             else if(this.casted){                       //reeling the dobber or fish in
                 if(this.dobber.underwater){
-                    //adds points to score
-                    console.log(this.dobber.fish.points)
+                    this.scene.engine.ui.addScore(this.dobber.fish.points, 'score')//adds points to score
                     this.dobber.fish.kill()             //remove the fish
                     this.dobber.underwaterState(false)  //reset the underwaterstate
                 } else if(!this.dobber.underwater){
-                    console.log('reeled to fast')
+                    console.log('to fast')
                 }
                 this.castedState(false)                 //undo the casting of the rod
                 this.dobber.kill()
-                
-
             }
         }
     }
     castedState(state){                                 //to reset the castedState with all its attributes
+        this.casted=state
         if(state){
-            console.log('I have been casted by something?')
+            this.graphics.use(Resources.RodOut.toSprite())
         } else if(!state){
-            this.casted= false
             this.graphics.use(Resources.Rod.toSprite())
-
         }
     }
 }

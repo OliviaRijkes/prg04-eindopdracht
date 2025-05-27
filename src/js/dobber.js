@@ -40,11 +40,9 @@ export class Dobber extends Actor{
     underwaterState(state){
         this.underwater=state
         if(state){
-            console.log('I am underwater')
-            //change graphics to underwater
+            this.graphics.use(Resources.UnderwaterDobber.toSprite())
         } else{
-            console.log('I am above water')
-            // change graphics to dobber
+            this.graphics.use(Resources.Dobber.toSprite())
         }
 
     }

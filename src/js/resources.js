@@ -6,7 +6,8 @@ const Resources = {
     Dobber: new ImageSource('images/dobber.png'),
     Rod: new ImageSource('images/rod.png'),
     RodCharging: new ImageSource('images/rodCharging.png'),
-    RodOut: new ImageSource('images/rodOut.png')
+    RodOut: new ImageSource('images/rodOut.png'),
+    UnderwaterDobber: new ImageSource('images/underwaterDobber.png')
 }
 
 
