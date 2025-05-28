@@ -2,7 +2,7 @@ import {Actor, Vector, Label, Font, FontUnit, Color,} from 'excalibur'
 
 export class UI extends Actor{
     
-    highscore= localStorage.getItem('highscore') //this localStorage item is added in game.js
+    highscore = localStorage.getItem('highscore') //this localStorage item is added in game.js
     score = 0
 
     constructor(){
@@ -32,9 +32,9 @@ export class UI extends Actor{
         this.addChild(this.scoreLabel)
     }
     addScore(points, name){
-        if(name=== 'score'){
-            this.score+=points
-            this.scoreLabel.text=`score: ${this.score}`
+        if(name === 'score'){
+            this.score += points
+            this.scoreLabel.text = `score: ${this.score}`
 
             if(this.score>this.highscore){
                 this.addScore(this.score,'highscore')
