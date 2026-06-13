@@ -29,9 +29,6 @@ export class Game extends Engine {
 
         this.goToScene("hut")
         console.log('start the mayhem')
-        if(!localStorage.getItem('highscore')){
-            console.log('there is localstorage')
-        }
     }
 }
 

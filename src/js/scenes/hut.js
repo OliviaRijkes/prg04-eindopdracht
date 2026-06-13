@@ -3,6 +3,9 @@ import { Player } from "../actors/player";
 
 export class Hut extends Scene {
     onInitialize(engine) {
+        if(!localStorage.getItem('highscore')){
+            localStorage.setItem('highscore','0')
+        }
         const flavorLabel = new Label({
             color: Color.Brown,
             x: engine.drawWidth / 2,
@@ -18,29 +21,34 @@ export class Hut extends Scene {
         this.add(flavorLabel)
         this.add(startLabel)
         startLabel.on("pointerdown", () => this.goOutside())
+
+        this.pointsLabel = new Label({
+            color: Color.Red,
+            x: this.engine.drawWidth / 2,
+            y: this.engine.drawHeight / 2 + 100,
+            text: `Points: ${this.engine.points}`
+        })
+        this.add(this.pointsLabel)
+        this.highscoreLabel = new Label({
+            color: Color.Brown,
+            x: engine.drawWidth / 2,
+            y: engine.drawHeight / 2 + 150,
+            text: `highscore:${localStorage.getItem('highscore')}`
+        })
+        this.add(this.highscoreLabel)
     }
     onActivate(engine) {
+        const highscore = JSON.parse(localStorage.getItem('highscore'))
+
         if (this.engine.points > 0) {
-            console.log('there are points')
-            let pointsLabel = new Label({
-                color: Color.Red,
-                x: this.engine.drawWidth / 2,
-                y: this.engine.drawHeight / 2 + 100,
-                text: `Points: ${this.engine.points}`
-            })
-            this.add(pointsLabel)
+            this.pointsLabel.text = `Points: ${this.engine.points}`
+            if (this.engine.points>highscore){
+                localStorage.setItem('highscore',`${this.engine.points}`)
+            }
+            this.highscoreLabel.text = `Highscore: ${localStorage.getItem('highscore')}`
         }
-        let highscoreLabel = new Label({
-            color: Color.Brown,
-            x: this.engine.drawWidth / 2,
-            y: this.engine.drawHeight / 2 + 150,
-            text: `highscore:localstorage`
-        })
-        this.add(highscoreLabel)
-        console.log('activate hut')
     }
     goOutside() {
-        // console.log("You are outside");
         this.engine.goToScene("outside")
     }
 }

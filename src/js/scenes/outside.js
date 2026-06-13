@@ -4,6 +4,7 @@ import { Enemy } from "../actors/enemy";
 import { UI } from "../ui";
 import { Penguin } from "../actors/penguin";
 import { Icebear } from "../actors/icebear";
+import { Pickup } from "../actors/pickup";
 
 export class Outside extends Scene {
     onInitialize(engine) {
@@ -27,6 +28,17 @@ export class Outside extends Scene {
         //init enemies
         this.add(new Penguin)
         this.add(new Icebear)
+        //init pickup
+        this.add(new Pickup)
+
+        this.spawnTimer = new Timer({
+            fcn:()=> this.spawn(),
+            interval:600,
+            repeats:true
+        })
+        this.add(this.spawnTimer)
+        this.spawnTimer.start()
+
     }
     updatePoints(amount) {
         if(amount === 0){
@@ -39,5 +51,16 @@ export class Outside extends Scene {
         this.engine.goToScene("hut")
 
     }
-    // enemyTimer = new Timer()
+    spawn(){
+        let enemyType = Math.random()
+        if(enemyType<0.35){
+            this.add(new Icebear)
+        } else{
+            this.add(new Penguin)
+        }
+        if(this.player.ammo<5 && enemyType<0.25){
+            this.add(new Pickup)
+        }
+
+    }
 }
