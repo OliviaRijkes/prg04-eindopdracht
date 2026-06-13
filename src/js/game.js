@@ -1,31 +1,37 @@
 import '../css/style.css'
-import { Actor, Engine, Vector, DisplayMode } from "excalibur"
+import { Actor, Engine, Vector, DisplayMode, Color } from "excalibur"
 import { Resources, ResourceLoader } from './resources.js'
+import { Player } from './actors/player.js'
+import { Enemy } from './actors/enemy.js'
+import { Hut } from './scenes/hut.js'
+import { Outside } from './scenes/outside.js'
 
 export class Game extends Engine {
+    points
 
     constructor() {
-        super({ 
+        super({
             width: 1280,
             height: 720,
             maxFps: 60,
-            displayMode: DisplayMode.FitScreen
-         })
+            displayMode: DisplayMode.FitScreen,
+            backgroundColor: Color.White
+
+        })
         this.start(ResourceLoader).then(() => this.startGame())
     }
 
     startGame() {
-        console.log("start de game!")
-        const fish = new Actor()
-        fish.graphics.use(Resources.Fish.toSprite())
-        fish.pos = new Vector(500, 300)
-        fish.vel = new Vector(-10,0)
-        fish.events.on("exitviewport", (e) => this.fishLeft(e))
-        this.add(fish)
-    }
+        this.points = 0
 
-    fishLeft(e) {
-        e.target.pos = new Vector(1350, 300)
+        this.addScene("hut", new Hut)
+        this.addScene("outside", new Outside)
+
+        this.goToScene("hut")
+        console.log('start the mayhem')
+        if(!localStorage.getItem('highscore')){
+            console.log('there is localstorage')
+        }
     }
 }
 
